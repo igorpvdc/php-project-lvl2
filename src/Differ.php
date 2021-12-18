@@ -4,8 +4,6 @@ namespace Differentiator\Differ;
 
 function genDiff($file1, $file2)
 {
-    var_dump($file1,$file2);
-    exit;
     if (file_exists("/home/igor/php-project-lvl2/{$file1}")) {
         $str1 = file_get_contents("/home/igor/php-project-lvl2/{$file1}");
     }
@@ -24,20 +22,25 @@ function genDiff($file1, $file2)
             if ($value === $array2[$key]) {
                 $newArray[$key] = $value;
             } else {
-                $newArray["-{$key}"] = $value;
-                $newArray["+{$key}"] = $array2[$key];
+                $newArray["- {$key}"] = $value;
+                $newArray["+ {$key}"] = $array2[$key];
             }
         } else {
-            $newArray["-{$key}"] = $value;
+            $newArray["- {$key}"] = $value;
         }
     }
 
     foreach ($array2 as $key => $value) {
         if (!array_key_exists($key, $newArray)) {
-            $newArray["+{$key}"] = $value;
+            $newArray["+ {$key}"] = $value;
         }
     }
 
-    return $newArray;
-}
+    $result = '';
 
+    foreach ($newArray as $key => $value) {
+        $result .= "\n{$key}: {$value}";
+    }
+
+    return $result;
+}
