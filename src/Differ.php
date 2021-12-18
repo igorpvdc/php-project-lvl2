@@ -2,37 +2,20 @@
 
 namespace Differentiator\Differ;
 
-//$file1 = '{
-//  "host": "hexlet.io",
-//  "timeout": 50,
-//  "proxy": "123.234.53.22",
-//  "follow": false
-//}';
-//
-//$file2 = '{
-//  "timeout": 20,
-//  "verbose": true,
-//  "host": "hexlet.io"
-//}';
-//
-//$file3 = '/home/igor/php-project-lvl2/src/file1.json';
-//
-//function jsonDecode($file)
-//{
-//    return json_decode($file, true);
-//}
-//
-//$array = jsonDecode($file3);
-//
-//var_dump($array);
-
-function gendiff($file1, $file2)
+function genDiff($file1, $file2)
 {
     var_dump($file1,$file2);
     exit;
-    $array1 = json_decode($file1, true);
+    if (file_exists("/home/igor/php-project-lvl2/{$file1}")) {
+        $str1 = file_get_contents("/home/igor/php-project-lvl2/{$file1}");
+    }
+    if (file_exists("/home/igor/php-project-lvl2/{$file2}")) {
+        $str2 = file_get_contents("/home/igor/php-project-lvl2/{$file2}");
+    }
 
-    $array2 = json_decode($file2, true);
+    $array1 = json_decode($str1, true);
+
+    $array2 = json_decode($str2, true);
 
     $newArray = [];
 
@@ -57,7 +40,4 @@ function gendiff($file1, $file2)
 
     return $newArray;
 }
-//
-//$array = gendiff($file1, $file2);
-//
-//var_dump(json_encode($array));
+
