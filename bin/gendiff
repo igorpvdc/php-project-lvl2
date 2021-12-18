@@ -2,6 +2,8 @@
 
 <?php
 
+use function Differentiator\Differ\genDiff;
+
 $autoloadPath1 = __DIR__ . '/../../../autoload.php';
 $autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
 if (file_exists($autoloadPath1)) {
@@ -10,7 +12,7 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-$doc = <<<DOCOPT
+const DOC = <<<DOCOPT
 
 Generate diff
 
@@ -28,10 +30,12 @@ DOCOPT;
 
 require_once ('vendor/docopt/docopt/src/docopt.php');
 
-$args = Docopt::handle($doc, array('help' => true, 'version'=> '123456', 'optionsFirst' => false));
-foreach ($args as $k=>$v)
-    echo $k.': '.json_encode($v).PHP_EOL;
+try {
+    $args = \Docopt::handle(DOC, array('version' => '1.0'));
+    $diff = genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
+    print_r($diff);
 
-$json = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
-
-var_dump(json_decode($json, true));
+} catch (\Exception $e) {
+    echo $e->getMessage();
+}
+echo "\n";
