@@ -2,6 +2,14 @@
 
 <?php
 
+$autoloadPath1 = __DIR__ . '/../../../autoload.php';
+$autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
+if (file_exists($autoloadPath1)) {
+    require_once $autoloadPath1;
+} else {
+    require_once $autoloadPath2;
+}
+
 $doc = <<<DOCOPT
 
 Generate diff
@@ -9,15 +17,21 @@ Generate diff
 Usage:
     gendiff (-h|--help) 
     gendiff (-v|--version)
+    gendiff [--format <fmt>] <firstFile> <secondFile>
 
 Options: 
-    -h --help     Show this screen.
-    -v --version  Show version.
+    -h --help         Show this screen.
+    -v --version      Show version.
+    --format <fmt>    Report format [default: stylish]
 
 DOCOPT;
 
-require('vendor/docopt/docopt/src/docopt.php');
+require_once ('vendor/docopt/docopt/src/docopt.php');
 
 $args = Docopt::handle($doc, array('help' => true, 'version'=> '123456', 'optionsFirst' => false));
 foreach ($args as $k=>$v)
     echo $k.': '.json_encode($v).PHP_EOL;
+
+$json = '{"a":1,"b":2,"c":3,"d":4,"e":5}';
+
+var_dump(json_decode($json, true));
