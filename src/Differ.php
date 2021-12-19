@@ -36,13 +36,7 @@ function genDiff($file1, $file2)
         }
     }
 
-    $result = '';
-
-    foreach ($newArray as $key => $value) {
-        $result .= "\n{$key}: {$value}";
-    }
-
-    return $result;
+    return json_encode($newArray);
 }
 
 $result = genDiff('file1.json', 'file2.json');
