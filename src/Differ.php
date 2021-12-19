@@ -44,3 +44,7 @@ function genDiff($file1, $file2)
 
     return $result;
 }
+
+$result = genDiff('file1.json', 'file2.json');
+
+var_dump($result);
