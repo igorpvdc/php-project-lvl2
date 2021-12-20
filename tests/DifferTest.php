@@ -15,10 +15,12 @@ class DifferTest extends TestCase
 
     public function test_genDiff(): void
     {
-        $Diff = $this->getFixtureFullPath('DiffBetweenTestsFiles.php');
+        $diff = $this->getFixtureFullPath('DiffBetweenTestsFiles.json');
+
+        $expected = file_get_contents($diff);
 
         $resultDiff = genDiff('file1.json', 'file2.json');
 
-        $this ->assertEquals($resultDiff, $Diff);
+        $this ->assertEquals($resultDiff, $expected);
     }
 }
