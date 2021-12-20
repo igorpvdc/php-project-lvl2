@@ -4,11 +4,8 @@ namespace Differentiator\Differ;
 
 function genDiff($file1, $file2)
 {
-    $pathToFile1 = pathToFile($file1);
-    $pathToFile2 = pathToFile($file2);
-
-    $jsonData1 = json_decode($pathToFile1, true);
-    $jsonData2 = json_decode($pathToFile2, true);
+    $jsonData1 = json_decode(pathToFile($file1), true);
+    $jsonData2 = json_decode(pathToFile($file2), true);
 
     $diffBetweenFiles = [];
 
@@ -39,10 +36,12 @@ function pathToFile($fileName): string
 {
     $path1 = __DIR__ . "/{$fileName}";
     $path2 = "../{$fileName}";
+    $path3 = "./{$fileName}";
 
     if (file_exists($path1)) {
         return file_get_contents($path1);
+    } elseif (file_exists($path2)) {
+        return file_get_contents($path2);
     }
-
-    return file_get_contents($path2);
+    return file_get_contents($path3);
 }
