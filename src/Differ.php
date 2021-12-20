@@ -4,37 +4,45 @@ namespace Differentiator\Differ;
 
 function genDiff($file1, $file2)
 {
-    if (file_exists("/home/igor/php-project-lvl2/{$file1}")) {
-        $str1 = file_get_contents("/home/igor/php-project-lvl2/{$file1}");
-    }
-    if (file_exists("/home/igor/php-project-lvl2/{$file2}")) {
-        $str2 = file_get_contents("/home/igor/php-project-lvl2/{$file2}");
-    }
+    $pathToFile1 = pathToFile($file1);
+    $pathToFile2 = pathToFile($file2);
 
-    $array1 = json_decode($str1, true);
+    $jsonData1 = json_decode($pathToFile1, true);
+    $jsonData2 = json_decode($pathToFile2, true);
 
-    $array2 = json_decode($str2, true);
+    $diffBetweenFiles = [];
 
-    $newArray = [];
-
-    foreach ($array1 as $key => $value) {
-        if (array_key_exists($key, $array2)) {
-            if ($value === $array2[$key]) {
-                $newArray[$key] = $value;
+    foreach ($jsonData1 as $key => $value) {
+        if (array_key_exists($key, $jsonData2)) {
+            if ($value === $jsonData2[$key]) {
+                $diffBetweenFiles[$key] = $value;
             } else {
-                $newArray["- {$key}"] = $value;
-                $newArray["+ {$key}"] = $array2[$key];
+                $diffBetweenFiles["- {$key}"] = $value;
+                $diffBetweenFiles["+ {$key}"] = $jsonData2[$key];
             }
         } else {
-            $newArray["- {$key}"] = $value;
+            $diffBetweenFiles["- {$key}"] = $value;
         }
     }
 
-    foreach ($array2 as $key => $value) {
-        if (!array_key_exists($key, $newArray)) {
-            $newArray["+ {$key}"] = $value;
+    foreach ($jsonData2 as $key => $value) {
+        if (!array_key_exists($key, $diffBetweenFiles)) {
+            $diffBetweenFiles["+ {$key}"] = $value;
         }
     }
 
-    return json_encode($newArray);
+    return json_encode($diffBetweenFiles);
+}
+
+
+function pathToFile($fileName): string
+{
+    $path1 = __DIR__ . "/{$fileName}";
+    $path2 = "../{$fileName}";
+
+    if (file_exists($path1)) {
+        return file_get_contents($path1);
+    }
+
+    return file_get_contents($path2);
 }
