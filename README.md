@@ -5,4 +5,4 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/ed617aefcd8650e48c73/test_coverage)](https://codeclimate.com/github/igorpvdc/php-project-lvl2/test_coverage)
 
-[![run-linter](https://github.com/igorpvdc/php-project-lvl2/actions/workflows/run-linter.yml/badge.svg?branch=main&event=push)](https://github.com/igorpvdc/php-project-lvl2/actions/workflows/run-linter.yml)
+[![my-tests](https://github.com/igorpvdc/php-project-lvl2/actions/workflows/my-tests.yml/badge.svg?branch=main&event=push)](https://github.com/igorpvdc/php-project-lvl2/actions/workflows/my-tests.yml)
