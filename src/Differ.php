@@ -2,17 +2,18 @@
 
 namespace Differentiator\Differ;
 
+use function Functional\sort;
+
 function genDiff($file1, $file2)
 {
     $jsonData1 = json_decode(pathToFile($file1), true);
     $jsonData2 = json_decode(pathToFile($file2), true);
-
     $diffBetweenFiles = [];
 
     foreach ($jsonData1 as $key => $value) {
         if (array_key_exists($key, $jsonData2)) {
             if ($value === $jsonData2[$key]) {
-                $diffBetweenFiles[$key] = $value;
+                $diffBetweenFiles["  {$key}"] = $value;
             } else {
                 $diffBetweenFiles["- {$key}"] = $value;
                 $diffBetweenFiles["+ {$key}"] = $jsonData2[$key];
@@ -23,10 +24,12 @@ function genDiff($file1, $file2)
     }
 
     foreach ($jsonData2 as $key => $value) {
-        if (!array_key_exists($key, $diffBetweenFiles)) {
+        if (!array_key_exists("  {$key}", $diffBetweenFiles)) {
             $diffBetweenFiles["+ {$key}"] = $value;
         }
     }
+
+    sort($collection, fn ($left, $right) => strcmp($left, $right));
 
     return json_encode($diffBetweenFiles);
 }
@@ -45,3 +48,8 @@ function pathToFile($fileName): string
     }
     return file_get_contents($path3);
 }
+
+$result = genDiff('file1.json', 'file2.json');
+
+var_dump($result);
+
