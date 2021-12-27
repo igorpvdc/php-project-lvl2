@@ -30,12 +30,8 @@ DOCOPT;
 
 require_once ('vendor/docopt/docopt/src/docopt.php');
 
-try {
-    $args = \Docopt::handle(DOC, array('version' => '1.0'));
-    $diff = genDiff($args['<firstFile>'], $args['<secondFile>'], $args['--format']);
-    print_r($diff);
+$args = Docopt::handle(DOC, array('version'=>'Naval Fate 2.0'));
+foreach ($args as $k=>$v)
+    echo $k.': '.json_encode($v).PHP_EOL;
 
-} catch (\Exception $e) {
-    echo $e->getMessage();
-}
-echo "\n";
+$diff = genDiff($args['<firstFile>'], $args['<secondFile>']);

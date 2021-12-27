@@ -1,5 +1,5 @@
 /vendor/
 .idea
-file1.json
-file2.json
+/file1.json
+/file2.json
 /build

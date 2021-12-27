@@ -17,7 +17,7 @@ function genDiff($file1, $file2)
 
     $keysInfo = array_map(function ($key) use ($jsonData1, $jsonData2) {
         if (array_key_exists($key, $jsonData1) && !array_key_exists($key, $jsonData2)) {
-            $value = isBoll($jsonData1[$key]);
+            $value = ifBollReturnString($jsonData1[$key]);
             return [
                 'key' => $key,
                 'status' => 'deleted',
@@ -26,7 +26,7 @@ function genDiff($file1, $file2)
         }
 
         if (array_key_exists($key, $jsonData2) && !array_key_exists($key, $jsonData1)) {
-            $value = isBoll($jsonData2[$key]);
+            $value = ifBollReturnString($jsonData2[$key]);
             return [
                 'key' => $key,
                 'status' => 'added',
@@ -35,7 +35,7 @@ function genDiff($file1, $file2)
         }
 
         if ($jsonData1[$key] === $jsonData2[$key]) {
-            $value = isBoll($jsonData1[$key]);
+            $value = ifBollReturnString($jsonData1[$key]);
             return [
                 'key' => $key,
                 'status' => 'same',
@@ -43,8 +43,8 @@ function genDiff($file1, $file2)
             ];
         }
 
-        $value1 = isBoll($jsonData1[$key]);
-        $value2 = isBoll($jsonData2[$key]);
+        $value1 = ifBollReturnString($jsonData1[$key]);
+        $value2 = ifBollReturnString($jsonData2[$key]);
 
         return [
             'key' => $key,
@@ -67,7 +67,11 @@ function genDiff($file1, $file2)
         }
     }
 
-    return implode("\n", $diffBetweenFiles);
+    $diff = implode("\n", $diffBetweenFiles);
+
+    print_r($diff);
+
+    return $diff;
 }
 
 
@@ -80,7 +84,7 @@ function getPathToFile($fileName): string
     return file_get_contents($fileName);
 }
 
-function isBoll($value): string
+function ifBollReturnString($value): string
 {
     if ($value === true) {
         return 'true';
