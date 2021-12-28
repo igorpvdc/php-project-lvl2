@@ -35,3 +35,5 @@ foreach ($args as $k=>$v)
     echo $k.': '.json_encode($v).PHP_EOL;
 
 $diff = genDiff($args['<firstFile>'], $args['<secondFile>']);
+
+print_r($diff);
