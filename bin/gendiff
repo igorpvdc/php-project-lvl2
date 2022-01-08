@@ -3,6 +3,9 @@
 <?php
 
 use function Differentiator\Differ\genDiff;
+use function Differentiator\Differ\differTest;
+use function Differentiator\Differ\checkArrays;
+use function Differentiator\Differ\test;
 
 $autoloadPath1 = __DIR__ . '/../../../autoload.php';
 $autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
@@ -34,6 +37,6 @@ $args = Docopt::handle(DOC, array('version'=>'Naval Fate 2.0'));
 foreach ($args as $k=>$v)
     echo $k.': '.json_encode($v).PHP_EOL;
 
-$diff = genDiff($args['<firstFile>'], $args['<secondFile>']);
+$diff = test($args['<firstFile>'], $args['<secondFile>']);
 
 print_r($diff);
